@@ -22,6 +22,9 @@ function App(): React.JSX.Element {
       <Text style={{ fontSize:30 }}>{email}</Text>
       <Text style={{ fontSize:30 }}>{10/5}</Text>
       <Text style={{ fontSize:30 }}>{myAge < 20 ? "younger" : "older"}</Text>
+
+      <Button title='Press'></Button>
+
     </View>
   );
 }
