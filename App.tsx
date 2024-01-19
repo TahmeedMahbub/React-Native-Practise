@@ -6,40 +6,34 @@
  */
 
 import React, { useState } from 'react';
-import {Button, StyleSheet, Text, View} from 'react-native';
-import ExtStyles from './style';
+import {Button, StyleSheet, Text, TextInput, View} from 'react-native';
 
 function App(): React.JSX.Element {
-  var [name, setName] = useState("Rafid");
+  var [name, setName] = useState("");
   return (
     <View>
-      <Text style={{ fontSize:30, padding: 5, backgroundColor: "black", color: "white", padding: 10, textAlign: 'center', }}>Inline CSS {/* DOUBLE CURLY BRACE. ONE FOR STYLE, ANOTHER FOR JSX */} </Text>
-      
-      <Text style={styles.textBox}>Internal CSS {/* SINGLE CURLY BRACE */} </Text>
+      <Text style={{ fontSize:30 }}>Handle Text Input </Text>
 
-      <Text style={ExtStyles.textBox}>External CSS {/* SINGLE CURLY BRACE */} </Text>
-
-      <Text style={[styles.style1, ExtStyles.style2, {padding: 10}]}>Multiple Class CSS {/* ARRAY FOR MULTIPLE CLASSES, ANOTHER CURLY BRACE FOR JSX */} </Text>
+      <Text style={{ fontSize:20, marginLeft: 10, marginTop: 10 }}>Your Name: {name} </Text>
+      <TextInput 
+        style={style.textInput}
+        placeholder='Enter Your Name'
+        value={name}
+        onChangeText={(text)=>setName(text)}
+      />
+      <Button title="Clear Text" onPress={()=>setName('')}/>
     </View>
   );
 }
 
-const styles = StyleSheet.create({
-  textBox: {
-    fontSize: 25,
-    backgroundColor: 'silver',
-    height: 100,
-    textAlignVertical: 'center',
-    padding: 10,
-    margin: 7,
-    borderRadius: 10
-  },
-
-  style1: {
-    fontSize: 25,
-    backgroundColor: 'aqua',
-    height: 100,
-    textAlignVertical: 'center',
+const style = StyleSheet.create({
+  textInput: {
+    fontSize: 20, 
+    margin: 10, 
+    padding: 10, 
+    borderWidth: 2, 
+    borderRadius: 10, 
+    borderColor:"grey"
   }
 })
 
