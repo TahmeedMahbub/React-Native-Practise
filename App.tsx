@@ -5,22 +5,21 @@
  * @format
  */
 
-import React from 'react';
+import React, { useState } from 'react';
 import {Button, Text, View} from 'react-native';
 
-const name = "Rafid";
-
-
 function App(): React.JSX.Element {
-  
-  const pressed =(data = "Button Pressed Without Parameter")=>{
-    console.warn(data);
+
+  const [name, setName] = useState("Rafid");
+
+  function changeName() {
+    setName("AIUB");
   }
+
   return (
     <View>
-      <Text style={{ fontSize:30 }}>Components</Text>
-      <Button title="Press without Parameter" color={'red'}  onPress={()=>pressed()}/>
-      <Button title="Press with Parameter" color={'green'}  onPress={()=>pressed("Greeen Button By Parameter")}/>
+      <Text style={{ fontSize:30 }}>{name}</Text>
+      <Button title="Update Name" onPress={changeName}/>
     </View>
   );
 }
