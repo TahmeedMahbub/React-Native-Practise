@@ -7,24 +7,26 @@
 
 import React from 'react';
 import {Text, View, Button} from 'react-native';
+import OfficeData from './components/OfficeData';
 
 const name = "Rafid";
 
-function myAge() {
-  return 25;
-}
 
 function App(): React.JSX.Element {
-  const email = "rafid@mail.com";
   return (
     <View>
-      <Text style={{ fontSize:30 }}>{name} ({myAge()})</Text>
-      <Text style={{ fontSize:30 }}>{email}</Text>
-      <Text style={{ fontSize:30 }}>{10/5}</Text>
-      <Text style={{ fontSize:30 }}>{myAge < 20 ? "younger" : "older"}</Text>
+      <OfficeData/>
+      <Text style={{ fontSize:30 }}>Components</Text>
+      <UserData/>
+    </View>
+  );
+}
 
-      <Button title='Press'></Button>
-
+const UserData = () => {
+  return (
+    <View>
+      <Text style={{ fontSize: 25 }}> Name : Rafid </Text>
+      <Text style={{ fontSize: 25 }}> Age : 25 </Text>
     </View>
   );
 }
