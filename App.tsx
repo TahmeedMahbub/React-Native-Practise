@@ -6,29 +6,24 @@
  */
 
 import React from 'react';
-import {Text, View, Button} from 'react-native';
-import OfficeData from './components/OfficeData';
+import {Button, Text, View} from 'react-native';
 
 const name = "Rafid";
 
 
 function App(): React.JSX.Element {
+  
+  const pressed =(data = "Button Pressed Without Parameter")=>{
+    console.warn(data);
+  }
   return (
     <View>
-      <OfficeData/>
       <Text style={{ fontSize:30 }}>Components</Text>
-      <UserData/>
+      <Button title="Press without Parameter" color={'red'}  onPress={()=>pressed()}/>
+      <Button title="Press with Parameter" color={'green'}  onPress={()=>pressed("Greeen Button By Parameter")}/>
     </View>
   );
 }
 
-const UserData = () => {
-  return (
-    <View>
-      <Text style={{ fontSize: 25 }}> Name : Rafid </Text>
-      <Text style={{ fontSize: 25 }}> Age : 25 </Text>
-    </View>
-  );
-}
 
 export default App;
