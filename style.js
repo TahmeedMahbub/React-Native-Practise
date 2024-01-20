@@ -4,8 +4,10 @@ export default ExtStyles = StyleSheet.create({ // IMPORTANT! NEED TO USE EXPORT 
     textBox: {
         fontSize: 25,
         backgroundColor: 'silver',
-        height: 70,
+        height: 100,
+        width: 123,
         textAlignVertical: 'center',
+        textAlign: 'center',
         padding: 10,
         margin: 7,
         borderRadius: 10
