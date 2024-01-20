@@ -8,6 +8,7 @@
 import React, { useState } from 'react';
 import {Button, FlatList, ScrollView, StyleSheet, Text, TextInput, View} from 'react-native';
 import ExtStyles from './style'
+import UserData from './components/UserData';
 
 function App(): React.JSX.Element {
   var alphabets = [
@@ -127,16 +128,6 @@ function App(): React.JSX.Element {
 
     </View>
   );
-}
-
-const UserData = (props)=>{
-  const item=props.val;
-  return (
-    <View style={style.box}>
-      <Text style={style.item}>{item.id}. </Text>
-      <Text style={style.item}>{item.name}</Text>
-    </View>        
-  )
 }
 
 const style = StyleSheet.create({
