@@ -6,11 +6,11 @@
  */
 
 import React, { useState } from 'react';
-import {Button, ScrollView, StyleSheet, Text, TextInput, View} from 'react-native';
+import {Button, FlatList, ScrollView, StyleSheet, Text, TextInput, View} from 'react-native';
 import ExtStyles from './style'
 
 function App(): React.JSX.Element {
-  var users = [
+  var alphabets = [
     {
       id: 1,
       name: "A"
@@ -121,13 +121,22 @@ function App(): React.JSX.Element {
     <View>
       <Text style={{ fontSize:30, padding: 10, backgroundColor: "#737373", color: "white" }}>Flat List Component</Text>
 
-      <View style={{ backgroundColor: "silver", flex: 1, flexDirection: 'row', flexWrap:'wrap' }}>
-        {
-          users.map((item)=><Text style={ExtStyles.textBox}>{item.name}</Text>)
-        }
+      <View>
+        <FlatList data={alphabets} renderItem={({item})=> <UserData val={item} />} />
       </View>
+
     </View>
   );
+}
+
+const UserData = (props)=>{
+  const item=props.val;
+  return (
+    <View style={style.box}>
+      <Text style={style.item}>{item.id}. </Text>
+      <Text style={style.item}>{item.name}</Text>
+    </View>        
+  )
 }
 
 const style = StyleSheet.create({
@@ -138,6 +147,20 @@ const style = StyleSheet.create({
     borderWidth: 2, 
     borderRadius: 10, 
     borderColor:"grey"
+  },
+
+  item: {
+    fontSize: 20, 
+    padding: 7, 
+    flex: 1,
+    
+  },
+
+  box: {
+    flexDirection: 'row',
+    borderWidth: 2,
+    margin: 5,
+
   }
 })
 
