@@ -1,6 +1,6 @@
 import {Button, FlatList, ScrollView, StyleSheet, Text, TextInput, View} from 'react-native';
 
-export default UserData = (props)=>{
+export default AlphabetData = (props)=>{
     const item=props.val;
     return (
       <View style={style.box}>

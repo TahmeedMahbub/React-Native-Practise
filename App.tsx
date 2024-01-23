@@ -8,7 +8,7 @@
 import React, { useState } from 'react';
 import {Button, FlatList, ScrollView, StyleSheet, Text, TextInput, View} from 'react-native';
 import ExtStyles from './style'
-import UserData from './components/UserData';
+import AlphabetData from './components/AlphabetData';
 
 function App(): React.JSX.Element {
   var alphabets = [
@@ -123,7 +123,7 @@ function App(): React.JSX.Element {
       <Text style={{ fontSize:30, padding: 10, backgroundColor: "#737373", color: "white" }}>Flat List Component</Text>
 
       <View>
-        <FlatList data={alphabets} renderItem={({item})=> <UserData val={item} />} />
+        <FlatList data={alphabets} renderItem={({item})=> <AlphabetData val={item} />} />
       </View>
 
     </View>
