@@ -6,7 +6,7 @@
  */
 
 import React, { useState } from 'react';
-import {Button, FlatList, ScrollView, StyleSheet, Text, TextInput, View} from 'react-native';
+import {Button, FlatList, ScrollView, SectionList, StyleSheet, Text, TextInput, View} from 'react-native';
 import ExtStyles from './style'
 import AlphabetData from './components/AlphabetData';
 
@@ -118,13 +118,37 @@ function App(): React.JSX.Element {
     },
   ];
 
+  var users = [
+    {
+      id: 1,
+      name: "Tahmeed",
+      data: ["PHP", "Laravel", "CakePHP", "Wordpress"]
+    },
+    {
+      id: 2,
+      name: "Mahbub",
+      data: ["Business", "Project", "Land Share"]
+    },
+    {
+      id: 3,
+      name: "Rafid",
+      data: ["JavaScript", "CSS", "React Native"]
+    },
+  ]
+
   return (
     <View>
-      <Text style={{ fontSize:30, padding: 10, backgroundColor: "#737373", color: "white" }}>Flat List Component</Text>
+      <Text style={{ fontSize:20, padding: 10, backgroundColor: "#737373", color: "white" }}>Section List</Text>
 
-      <View>
-        <FlatList data={alphabets} renderItem={({item})=> <AlphabetData val={item} />} />
-      </View>
+      <SectionList 
+      sections = {users}
+      renderItem={({item})=>
+        <Text style={{ fontSize: 20, marginLeft: 30 }}>{item}</Text>
+      }
+      renderSectionHeader={({section:{name}})=>(
+        <Text style={{ fontSize: 25, marginLeft: 10 }}>{name}</Text>
+      )}
+      />
 
     </View>
   );
@@ -151,8 +175,7 @@ const style = StyleSheet.create({
     flexDirection: 'row',
     borderWidth: 2,
     margin: 5,
-
-  }
+  },
 })
 
 
