@@ -1,0 +1,6 @@
+LIFE CYCLE (3)
+================
+1. Mounting
+2. Update
+3. Unmounting
+
