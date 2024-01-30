@@ -4,3 +4,13 @@ LIFE CYCLE (3)
 2. Update
 3. Unmounting
 
+Functional Component Cons
+==============================
+1. states, life cycle method, context api cannot be usable
+
+Hooks
+===================
+new feature in react 16.8
+remove limitations in Functional Component
+only used in functional component, not in class component
+let us use state and other react features without writing class
