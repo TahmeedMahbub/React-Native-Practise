@@ -10,7 +10,13 @@ Functional Component Cons
 
 Hooks
 ===================
-new feature in react 16.8
-remove limitations in Functional Component
-only used in functional component, not in class component
-let us use state and other react features without writing class
+1. new feature in react 16.8
+2. remove limitations in Functional Component
+3. only used in functional component, not in class component
+4. let us use state and other react features without writing class
+5. in whole life cycle, only one hook named "useEffect"
+
+useEffect (Only hook used in whole life cycle)
+============================
+1. every mount/updating time, useEffect will be called
+2. send empty array inside useEffect as last parameter, will not be called after mounting
