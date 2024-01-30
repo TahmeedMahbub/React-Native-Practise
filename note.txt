@@ -20,3 +20,9 @@ useEffect (Only hook used in whole life cycle)
 ============================
 1. every mount/updating time, useEffect will be called
 2. send empty array inside useEffect as last parameter, will not be called after mounting
+
+
+unmount: Remove from UI 
+===================
+
+
