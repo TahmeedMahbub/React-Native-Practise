@@ -6,13 +6,13 @@ const App = () => {
   const [effect, setEffect] = useState(0);
   const [data, setData] = useState(0);
 
-  useEffect (()=>{
-    console.warn("Called from useEffect")
-  }, [count])
+  // useEffect (()=>{
+  //   console.warn("Called from useEffect")
+  // }, [count])
 
-  useEffect (()=>{
-    console.warn("Called from another useEffect")
-  }, [effect])
+  // useEffect (()=>{
+  //   console.warn("Called from another useEffect")
+  // }, [effect])
 
   return (
     <View>
@@ -23,7 +23,21 @@ const App = () => {
       <Button title="Update Count" onPress={()=>setCount(count+1)} />
       <Button title="Update Effect" onPress={()=>setEffect(effect+1)} />
       <Button title="Update Data" onPress={()=>setData(data+1)} />
+      <User info={{ count, effect, data }}/>
     </View>
+  )
+}
+
+const User=(props)=>{
+  useEffect(()=>{
+    console.warn("data updated")
+  }, [props.info.data]);
+
+  useEffect(()=>{
+    console.warn("count updated")
+  }, [props.info.count]);
+  return (
+    <Text style={{ fontSize:20, padding: 10 }}>User Component </Text>
   )
 }
 
