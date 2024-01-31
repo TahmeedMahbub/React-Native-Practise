@@ -1,30 +1,39 @@
 import React, { useState } from 'react';
-import {View, Text, StyleSheet, Button, ActivityIndicator, Modal, Pressable} from 'react-native';
+import {View, Text, StyleSheet, Button, ActivityIndicator, Modal, Pressable, StatusBar} from 'react-native';
 
 const Header=()=>{
   return(
     <Text style={style.header}>
-      Pressable - 4 Events
+      StatusBar - Top Bar
     </Text>
     );
 }
 
 
 const App = () => {
+  const [hideBar, setHideBar] = useState(false);
+  const [changeColor, setChangeColor] = useState("light-content");
   return (
     <View style={style.main}>
+      <StatusBar 
+        backgroundColor="teal" 
+        barStyle={changeColor} // default, dark-content, light-content
+        hidden={hideBar}
+      />
       <Header />
 
-      <View style={style.body}>
-        <Pressable
-          onPress={()=>console.warn("pressed")}
-          onLongPress={()=>console.warn("looooooooong pressed")} // after pressing 0.5 seconds
-          onPressIn={()=>console.warn("pressed in")}
-          onPressOut={()=>console.warn("pressed out")}
-        >
-          <Text style={style.pressable}>Pressable</Text>
-        </Pressable>
+      <Pressable
+        onPressIn={()=>setHideBar(true)}
+        onPressOut={()=>setHideBar(false)}
+      >
+        <Text style={style.pressable}>Hide Status Bar</Text>
+      </Pressable>
+
+      <View style={[style.button]}>
+        <Button title="Change Color" onPress={()=>setChangeColor(changeColor == "light-content" ? "dark-content" : "light-content")}/>
       </View>
+
+      
     </View>
   )
 }
@@ -36,7 +45,7 @@ const style = StyleSheet.create({
   header: {
     fontSize:25, 
     padding: 10, 
-    backgroundColor: "#737373", 
+    backgroundColor: "teal", 
     color: "white"
   },
   body: {
