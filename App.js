@@ -1,67 +1,36 @@
 import React, { useState } from 'react';
-import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
+import {View, Text, StyleSheet, Button, ActivityIndicator} from 'react-native';
 
 const Header=()=>{
   return(
     <Text style={style.header}>
-      Dynamic Radio Button
+      Loader: ActivityIndicator
     </Text>
     );
 }
 
 
 const App = () => {
+  const [show, setShow] = useState(false);
 
-  const skills = [
-    {
-      id: 1,
-      name: 'php'
-    },
-    {
-      id: 2,
-      name: 'js'
-    },
-    {
-      id: 3,
-      name: 'html'
-    },
-    {
-      id: 4,
-      name: 'css'
-    },
-  ]
-  const [checkRadio, setCheckRadio] = useState(0);
+  const toggleLoader =()=> {
+    // YOU CAN USE TIMEOUT
+    setShow(true);
+    setTimeout(()=>{
+      setShow(false)
+    }, 2000);
+
+    // OR YOU CAN TOGGLE
+    // setShow(!show);
+  }
 
   return (
     <View style={style.main}>
       <Header />
 
       <View style={style.body}>
-        {
-          skills.map((item, index) => 
-            <TouchableOpacity 
-              key={index}
-              onPress={()=>setCheckRadio(item.id)}
-            >
-              <View style={style.radioWrapper}>
-                <View style={style.radio}>
-                  {checkRadio == item.id ? <View style={style.radioBg} /> : null}
-                </View>
-                <Text style={style.radioText}>{item.id}. {item.name}</Text>
-              </View>
-            </TouchableOpacity>
-          )
-        }
-
-        {/* <TouchableOpacity onPress={()=>setCheckRadio(1)}>
-          <View style={style.radioWrapper}>
-            <View style={style.radio}>
-              {checkRadio == 1 ? <View style={style.radioBg} /> : null}
-            </View>
-            <Text style={style.radioText}>Radio 1</Text>
-          </View>
-        </TouchableOpacity> */}
-
+        <ActivityIndicator size={100} color="orange" animating={show}/>
+        <Button title="Toggle Loader" onPress={toggleLoader} />
       </View>
     </View>
     
@@ -80,8 +49,6 @@ const style = StyleSheet.create({
   },
   body: {
     flex: 1,
-    alignItems: 'left',
-    justifyContent: 'center'
   },
   radio:{
     height: 40, 
