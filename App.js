@@ -1,36 +1,34 @@
 import React, { useState } from 'react';
-import {View, Text, StyleSheet, Button, ActivityIndicator} from 'react-native';
+import {View, Text, StyleSheet, Button, ActivityIndicator, Modal} from 'react-native';
 
 const Header=()=>{
   return(
     <Text style={style.header}>
-      Loader: ActivityIndicator
+      Modal
     </Text>
     );
 }
 
 
 const App = () => {
-  const [show, setShow] = useState(false);
 
-  const toggleLoader =()=> {
-    // YOU CAN USE TIMEOUT
-    setShow(true);
-    setTimeout(()=>{
-      setShow(false)
-    }, 2000);
-
-    // OR YOU CAN TOGGLE
-    // setShow(!show);
-  }
+  const [showModal,setShowModal] = useState(false);
 
   return (
     <View style={style.main}>
       <Header />
 
-      <View style={style.body}>
-        <ActivityIndicator size={100} color="orange" animating={show}/>
-        <Button title="Toggle Loader" onPress={toggleLoader} />
+      {/* MODAL animationTypes :'slide', 'fade', 'none' */}
+      <Modal transparent={true} visible={showModal} animationType='slide'>
+        <View style={style.modalWrapper}>
+          <View style={style.modalView}>
+            <Text style={{ fontSize: 30,  }}>Hello Rafid!</Text>
+            <Button title="Close Modal" onPress={() => setShowModal(false)} />
+          </View>
+        </View>
+      </Modal>
+      <View style={style.bottomButton}>
+        <Button title="Open Modal" onPress={() => setShowModal(true)}/>
       </View>
     </View>
     
@@ -82,9 +80,26 @@ const style = StyleSheet.create({
     shadowColor: 'blue',
     elevation: 20,
   },
+  bottomButton: {
+    flex: 1,
+    justifyContent: 'flex-end'
+  },
   success: {
     backgroundColor: 'lightgreen',
-  }
+  },
+  modalWrapper: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  modalView: {
+    backgroundColor: 'lavender',
+    marginBottom: 10,
+    padding: 40,
+    borderRadius: 20,
+    shadowColor: 'blue',
+    elevation: 20,
+  },
 })
 
 export default App;
