@@ -4,7 +4,7 @@ import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 const Header=()=>{
   return(
     <Text style={style.header}>
-      Radio Button - TouchableOpacity
+      Dynamic Radio Button
     </Text>
     );
 }
@@ -12,31 +12,55 @@ const Header=()=>{
 
 const App = () => {
 
-const [checkRadio, setCheckRadio] = useState(0);
+  const skills = [
+    {
+      id: 1,
+      name: 'php'
+    },
+    {
+      id: 2,
+      name: 'js'
+    },
+    {
+      id: 3,
+      name: 'html'
+    },
+    {
+      id: 4,
+      name: 'css'
+    },
+  ]
+  const [checkRadio, setCheckRadio] = useState(0);
 
   return (
     <View style={style.main}>
       <Header />
 
       <View style={style.body}>
+        {
+          skills.map((item, index) => 
+            <TouchableOpacity 
+              key={index}
+              onPress={()=>setCheckRadio(item.id)}
+            >
+              <View style={style.radioWrapper}>
+                <View style={style.radio}>
+                  {checkRadio == item.id ? <View style={style.radioBg} /> : null}
+                </View>
+                <Text style={style.radioText}>{item.id}. {item.name}</Text>
+              </View>
+            </TouchableOpacity>
+          )
+        }
 
-        <TouchableOpacity onPress={()=>setCheckRadio(1)}>
+        {/* <TouchableOpacity onPress={()=>setCheckRadio(1)}>
           <View style={style.radioWrapper}>
             <View style={style.radio}>
               {checkRadio == 1 ? <View style={style.radioBg} /> : null}
             </View>
             <Text style={style.radioText}>Radio 1</Text>
           </View>
-        </TouchableOpacity>
-
-        <TouchableOpacity onPress={()=>setCheckRadio(2)}>
-          <View style={style.radioWrapper}>
-            <View style={style.radio}>
-              {checkRadio == 2 ? <View style={style.radioBg} /> : null}
-            </View>
-            <Text style={style.radioText}>Radio 2</Text>
-          </View>
-        </TouchableOpacity>
+        </TouchableOpacity> */}
 
       </View>
     </View>
@@ -56,7 +80,7 @@ const style = StyleSheet.create({
   },
   body: {
     flex: 1,
-    alignItems: 'center',
+    alignItems: 'left',
     justifyContent: 'center'
   },
   radio:{
