@@ -1,23 +1,39 @@
 import React from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import {View, Text, StyleSheet, TouchableHighlight} from 'react-native';
 
 const App = () => {
   return (
-    <View style={{ flex:1 }}>
-      <View style={{ flex:2, backgroundColor: "red", flexDirection: "row" }}>
-        <View style={{ flex:1, margin: 10, backgroundColor: "white" }}/>
-        <View style={{ flex:1, margin: 10, backgroundColor: "grey" }}/>
-        <View style={{ flex:1, margin: 10, backgroundColor: "black" }}/>
-      </View>
-      <View style={{ flex:1, backgroundColor: "green" }}/>
-      <View style={{ flex:1, backgroundColor: "blue" }}/>
+    <View>
+      <Text style={{ fontSize:25, padding: 10, backgroundColor: "#737373", color: "white" }}>
+        TouchableHighlight
+      </Text>
+      <TouchableHighlight>
+        <Text style={[style.button, style.success]}>Success</Text>
+      </TouchableHighlight>
+      <TouchableHighlight>
+        <Text style={style.button}>Button</Text>
+      </TouchableHighlight>
     </View>
+    
   )
 }
 
 const style = StyleSheet.create({
   main: {
     flex: 1
+  }, 
+  button : {
+    backgroundColor: 'skyblue',
+    fontSize: 20,
+    textAlign: 'center',
+    padding: 10,
+    margin: 10,
+    borderRadius: 10,
+    shadowColor: 'blue',
+    elevation: 20,
+  },
+  success: {
+    backgroundColor: 'lightgreen',
   }
 })
 

@@ -25,4 +25,9 @@ useEffect (Only hook used in whole life cycle)
 unmount: Remove from UI 
 ===================
 
+Touchable Highlight: alternative of button
+__________________________
+1. Default Button has limitations in designing
+
+
 
