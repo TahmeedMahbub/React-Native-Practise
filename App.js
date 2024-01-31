@@ -1,30 +1,24 @@
-import React, {useEffect, useState} from 'react';
-import {View, Text, Button} from 'react-native';
+import React from 'react';
+import {View, Text, StyleSheet} from 'react-native';
 
 const App = () => {
-  const [show, setShow] = useState(false);
-
   return (
-    <View>
-      <Text style={{ fontSize:25, padding: 10, backgroundColor: "#737373", color: "white" }}>useEffect for Unmount</Text>
-      <Button title="Toggle Component" onPress={()=>setShow(!show)} />
-      {show ? <User /> : null}
+    <View style={{ flex:1 }}>
+      <View style={{ flex:2, backgroundColor: "red", flexDirection: "row" }}>
+        <View style={{ flex:1, margin: 10, backgroundColor: "white" }}/>
+        <View style={{ flex:1, margin: 10, backgroundColor: "grey" }}/>
+        <View style={{ flex:1, margin: 10, backgroundColor: "black" }}/>
+      </View>
+      <View style={{ flex:1, backgroundColor: "green" }}/>
+      <View style={{ flex:1, backgroundColor: "blue" }}/>
     </View>
   )
 }
 
-const User=()=>{
-  let timer = setInterval(()=>{
-    console.warn("timer called");
-  }, 2000)
-
-  useEffect(()=>{
-    return()=>clearInterval(timer)
-  })
-  return (
-    <Text style={{ fontSize:20, padding: 10 }}>User Component </Text>
-  )
-}
-
+const style = StyleSheet.create({
+  main: {
+    flex: 1
+  }
+})
 
 export default App;
