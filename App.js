@@ -1,37 +1,31 @@
 import React, { useState } from 'react';
-import {View, Text, StyleSheet, Button, ActivityIndicator, Modal} from 'react-native';
+import {View, Text, StyleSheet, Button, ActivityIndicator, Modal, Pressable} from 'react-native';
 
 const Header=()=>{
   return(
     <Text style={style.header}>
-      Modal
+      Pressable - 4 Events
     </Text>
     );
 }
 
 
 const App = () => {
-
-  const [showModal,setShowModal] = useState(false);
-
   return (
     <View style={style.main}>
       <Header />
 
-      {/* MODAL animationTypes :'slide', 'fade', 'none' */}
-      <Modal transparent={true} visible={showModal} animationType='slide'>
-        <View style={style.modalWrapper}>
-          <View style={style.modalView}>
-            <Text style={{ fontSize: 30,  }}>Hello Rafid!</Text>
-            <Button title="Close Modal" onPress={() => setShowModal(false)} />
-          </View>
-        </View>
-      </Modal>
-      <View style={style.bottomButton}>
-        <Button title="Open Modal" onPress={() => setShowModal(true)}/>
+      <View style={style.body}>
+        <Pressable
+          onPress={()=>console.warn("pressed")}
+          onLongPress={()=>console.warn("looooooooong pressed")} // after pressing 0.5 seconds
+          onPressIn={()=>console.warn("pressed in")}
+          onPressOut={()=>console.warn("pressed out")}
+        >
+          <Text style={style.pressable}>Pressable</Text>
+        </Pressable>
       </View>
     </View>
-    
   )
 }
 
@@ -99,6 +93,17 @@ const style = StyleSheet.create({
     borderRadius: 20,
     shadowColor: 'blue',
     elevation: 20,
+  },
+  pressable: {
+    backgroundColor: "teal",
+    color: '#fff',
+    fontSize: 20,
+    margin: 10,
+    padding: 10,
+    borderRadius: 10,
+    shadowColor: 'green',
+    elevation: 50,
+    textAlign: 'center'
   },
 })
 
