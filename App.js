@@ -13,19 +13,19 @@ const Header=()=>{
 
 const Stack = createNativeStackNavigator();
 
-const Home = (props) => {
+const Home = () => {
   return (
     <View>
       <Text style={style.textBox}>Home Screen</Text>
-      <Button title="Login" onPress={()=>props.navigation.navigate("Login")} />
     </View>
   )
 }
 
-const Login = () => {
+const Login = (props) => {
   return (
     <View>
       <Text style={style.textBox}>Login Page</Text>
+      <Button title="Go Home" onPress={()=>props.navigation.navigate("Home")} />
     </View>
   )
 }
@@ -39,9 +39,36 @@ const App = () => {
         barStyle="dark-content"
       />
       <NavigationContainer>
-        <Stack.Navigator>
-          <Stack.Screen name="Home: Stack Navigation" component={Home} />
-          <Stack.Screen name="Login" component={Login} />
+        <Stack.Navigator 
+            screenOptions={
+              { 
+                title: "User Login", 
+                headerStyle: {
+                  backgroundColor: 'teal'
+                },
+                headerTitleStyle: {
+                  fontSize: 25,
+                  color: 'white'
+                }
+              }
+            }>
+          <Stack.Screen name="Login" 
+            component={Login} 
+            // DO BELOW LINES FOR INDIVIDUAL NAVIGATION BAR, OTHERWISE USE screenOptions IN Stack.Navigator
+            // options={
+            //   { 
+            //     title: "User Login", 
+            //     headerStyle: {
+            //       backgroundColor: 'teal'
+            //     },
+            //     headerTitleStyle: {
+            //       fontSize: 25,
+            //       color: 'white'
+            //     }
+            //   }
+            // }
+          />
+          <Stack.Screen name="Home" component={Home} options={{ title: "App Home" }}/>
         </Stack.Navigator>
       </NavigationContainer>
 

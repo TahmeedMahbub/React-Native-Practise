@@ -40,3 +40,10 @@ Navigation: 3 types (reactnavigation.org)
 1. stack
 2. drawer
 3. tab
+
+
+1 . Stack Navigation
+==============================
+>> npm install react-native-screens react-native-safe-area-context
+>> npm install @react-navigation/native
+>> npx react-native run-android
