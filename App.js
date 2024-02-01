@@ -2,6 +2,8 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React, { useState } from 'react';
 import {View, Text, StyleSheet, StatusBar, Button} from 'react-native';
+import { Home } from './components/Home';
+
 
 const Header=()=>{
   return(
@@ -13,14 +15,6 @@ const Header=()=>{
 
 const Stack = createNativeStackNavigator();
 
-const Home = () => {
-  return (
-    <View>
-      <Text style={style.textBox}>Home Screen</Text>
-    </View>
-  )
-}
-
 const Login = (props) => {
   return (
     <View>
@@ -30,8 +24,16 @@ const Login = (props) => {
   )
 }
 
+const BtnComponent =()=>{
+  return (<Button title="Alada Component" />)
+}
+
 
 const App = () => {
+  const btnAction = () => {
+    console.warn("button pressed");
+  };
+
   return (
     <View style={style.main}>
       <StatusBar 
@@ -42,6 +44,8 @@ const App = () => {
         <Stack.Navigator 
             screenOptions={
               { 
+                headerTitle: ()=><Button title="Left" onPress={()=>btnAction()} />,
+                headerRight: ()=><BtnComponent />,
                 title: "User Login", 
                 headerStyle: {
                   backgroundColor: 'teal'
@@ -51,12 +55,15 @@ const App = () => {
                   color: 'white'
                 }
               }
-            }>
+            }
+          >
           <Stack.Screen name="Login" 
             component={Login} 
             // DO BELOW LINES FOR INDIVIDUAL NAVIGATION BAR, OTHERWISE USE screenOptions IN Stack.Navigator
             // options={
             //   { 
+            //     headerTitle: ()=><Button title="Left" onPress={()=>btnAction()} />,
+            //     headerRight: ()=><BtnComponent />,
             //     title: "User Login", 
             //     headerStyle: {
             //       backgroundColor: 'teal'
