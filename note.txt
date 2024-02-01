@@ -30,4 +30,9 @@ __________________________
 1. Default Button has limitations in designing
 
 
+WebView: Install Package
+=============================
+>> npm install package
+>> npx react-native run-android
+
 

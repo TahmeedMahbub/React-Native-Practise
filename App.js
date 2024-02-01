@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import {View, Text, StyleSheet, Button, ActivityIndicator, Modal, Pressable, StatusBar, Platform} from 'react-native';
+import {View, Text, StyleSheet, StatusBar, Platform} from 'react-native';
+import { WebView } from 'react-native-webview';
 
 const Header=()=>{
   return(
     <Text style={style.header}>
-      OS Platform Check
+      Install Packages1
     </Text>
     );
 }
@@ -14,18 +15,12 @@ const App = () => {
   return (
     <View style={style.main}>
       <StatusBar 
-        backgroundColor="teal" 
-        barStyle="light-content"
+        backgroundColor="#f2f2f2" 
+        barStyle="dark-content"
       />
-      <Header />
-      <Text style={style.text}><Text style={style.label}>Operating System:</Text> {Platform.OS}</Text>
-      <Text style={style.text}><Text style={style.label}>Brand:</Text> {JSON.stringify(Platform.constants.Brand)}</Text>
-      <Text style={style.text}><Text style={style.label}>OS Data:</Text> {JSON.stringify(Platform)}</Text>
-
-      
+    <WebView source={{ uri:"http://tahmeed-mahbub-rafid.atwebpages.com/expense-app" }} />
     </View>
-  )
-}
+)}
 
 const style = StyleSheet.create({
   main: {
