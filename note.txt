@@ -35,4 +35,8 @@ WebView: Install Package
 >> npm install package
 >> npx react-native run-android
 
-
+Navigation: 3 types (reactnavigation.org)
+==========================
+1. stack
+2. drawer
+3. tab

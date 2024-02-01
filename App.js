@@ -1,42 +1,51 @@
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React, { useState } from 'react';
 import {View, Text, StyleSheet, StatusBar, Button} from 'react-native';
 
 const Header=()=>{
   return(
     <Text style={style.header}>
-      Custom Modal
+      Stack Navigation
     </Text>
     );
 }
 
+const Stack = createNativeStackNavigator();
+
+const Home = (props) => {
+  return (
+    <View>
+      <Text style={style.textBox}>Home Screen</Text>
+      <Button title="Login" onPress={()=>props.navigation.navigate("Login")} />
+    </View>
+  )
+}
+
+const Login = () => {
+  return (
+    <View>
+      <Text style={style.textBox}>Login Page</Text>
+    </View>
+  )
+}
+
 
 const App = () => {
-  const [show, setShow] = useState(false);
   return (
     <View style={style.main}>
       <StatusBar 
         backgroundColor="teal" 
         barStyle="dark-content"
       />
-      <Header />
+      <NavigationContainer>
+        <Stack.Navigator>
+          <Stack.Screen name="Home: Stack Navigation" component={Home} />
+          <Stack.Screen name="Login" component={Login} />
+        </Stack.Navigator>
+      </NavigationContainer>
 
-      {
-        show ? 
-          <View style={style.modal}>
-            <View style={style.modalBody}>
-              <Text>This is Body of Modal</Text>
-              <View style={style.bottomButton}>
-                <Button title="Close" onPress={()=>setShow(false)} />
-              </View>
-            </View>
-          </View>
-        :
-          null
-      }
-
-      <View style={style.bottomButton}>
-        <Button title="Open Modal" onPress={()=>setShow(true)}/>
-      </View>
+      {/* <Header /> */}
 
     </View>
 )}
@@ -54,6 +63,17 @@ const style = StyleSheet.create({
   body: {
     flex: 1,
   },
+  textBox: {
+    fontSize: 25,
+    backgroundColor: 'silver',
+    height: 100,
+    height: 70,
+    textAlignVertical: 'center',
+    textAlign: 'left',
+    padding: 10,
+    margin: 7,
+    borderRadius: 10
+},
   text: {
     fontSize: 20,
     margin: 5,
