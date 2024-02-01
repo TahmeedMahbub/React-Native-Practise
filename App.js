@@ -1,37 +1,26 @@
 import React, { useState } from 'react';
-import {View, Text, StyleSheet, Button, ActivityIndicator, Modal, Pressable, StatusBar} from 'react-native';
+import {View, Text, StyleSheet, Button, ActivityIndicator, Modal, Pressable, StatusBar, Platform} from 'react-native';
 
 const Header=()=>{
   return(
     <Text style={style.header}>
-      StatusBar - Top Bar
+      OS Platform Check
     </Text>
     );
 }
 
 
 const App = () => {
-  const [hideBar, setHideBar] = useState(false);
-  const [changeColor, setChangeColor] = useState("light-content");
   return (
     <View style={style.main}>
       <StatusBar 
         backgroundColor="teal" 
-        barStyle={changeColor} // default, dark-content, light-content
-        hidden={hideBar}
+        barStyle="light-content"
       />
       <Header />
-
-      <Pressable
-        onPressIn={()=>setHideBar(true)}
-        onPressOut={()=>setHideBar(false)}
-      >
-        <Text style={style.pressable}>Hide Status Bar</Text>
-      </Pressable>
-
-      <View style={[style.button]}>
-        <Button title="Change Color" onPress={()=>setChangeColor(changeColor == "light-content" ? "dark-content" : "light-content")}/>
-      </View>
+      <Text style={style.text}><Text style={style.label}>Operating System:</Text> {Platform.OS}</Text>
+      <Text style={style.text}><Text style={style.label}>Brand:</Text> {JSON.stringify(Platform.constants.Brand)}</Text>
+      <Text style={style.text}><Text style={style.label}>OS Data:</Text> {JSON.stringify(Platform)}</Text>
 
       
     </View>
@@ -50,6 +39,14 @@ const style = StyleSheet.create({
   },
   body: {
     flex: 1,
+  },
+  text: {
+    fontSize: 20,
+    margin: 5,
+    padding: 5
+  },
+  label: {
+    fontWeight: "bold"
   },
   radio:{
     height: 40, 
