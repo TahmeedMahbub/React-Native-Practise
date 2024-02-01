@@ -1,24 +1,43 @@
 import React, { useState } from 'react';
-import {View, Text, StyleSheet, StatusBar, Platform} from 'react-native';
-import { WebView } from 'react-native-webview';
+import {View, Text, StyleSheet, StatusBar, Button} from 'react-native';
 
 const Header=()=>{
   return(
     <Text style={style.header}>
-      Install Packages1
+      Custom Modal
     </Text>
     );
 }
 
 
 const App = () => {
+  const [show, setShow] = useState(false);
   return (
     <View style={style.main}>
       <StatusBar 
-        backgroundColor="#f2f2f2" 
+        backgroundColor="teal" 
         barStyle="dark-content"
       />
-    <WebView source={{ uri:"http://tahmeed-mahbub-rafid.atwebpages.com/expense-app" }} />
+      <Header />
+
+      {
+        show ? 
+          <View style={style.modal}>
+            <View style={style.modalBody}>
+              <Text>This is Body of Modal</Text>
+              <View style={style.bottomButton}>
+                <Button title="Close" onPress={()=>setShow(false)} />
+              </View>
+            </View>
+          </View>
+        :
+          null
+      }
+
+      <View style={style.bottomButton}>
+        <Button title="Open Modal" onPress={()=>setShow(true)}/>
+      </View>
+
     </View>
 )}
 
@@ -105,6 +124,21 @@ const style = StyleSheet.create({
     shadowColor: 'green',
     elevation: 50,
     textAlign: 'center'
+  },
+  modal: {
+    flex: 1,
+    backgroundColor: 'rgba(50,50,50,.5)',
+    justifyContent: 'center',
+    alignItems: 'center',
+    
+  },
+  modalBody: {
+    backgroundColor: '#fff',
+    height: 300,
+    width: 300,
+    padding: 20,
+    borderRadius: 10
+
   },
 })
 
