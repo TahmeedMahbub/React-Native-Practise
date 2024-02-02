@@ -1,28 +1,43 @@
 import React, { useEffect, useState } from 'react';
-import {View, Text, StyleSheet, StatusBar, Button, ScrollView, FlatList} from 'react-native';
+import {View, Text, StyleSheet, StatusBar, Button, ScrollView, FlatList, TextInput} from 'react-native';
 
 
 const Header=()=>{
   return(
-    <Text style={style.header}>
-      POST API: Store Data
-    </Text>
+    <View>
+      <StatusBar 
+        backgroundColor="teal" 
+        barStyle="dark-content"
+      />
+      <Text style={style.header}>
+        POST API: Store Data
+      </Text>
+    </View>
     );
 }
 const App = () => {
 
-  const getApi= async()=>{
-    const url = "http://10.0.2.2:3000/users";
-    var result = await fetch(url);
-    result = await result.json();
-    setData(result);
-  }
+  // const getApi= async()=>{
+  //   const url = "http://10.0.2.2:3000/users";
+  //   var result = await fetch(url);
+  //   result = await result.json();
+  //   setData(result);
+  // }
+  
+  // useEffect(()=>{
+  //   getApi();
+  // }, [])
 
   const storeApi = async()=>{
-    const postData ={
-      name: "Rafid",
-      age: 23
-    }
+
+    const postData ={name, age};
+
+    // IF KEY AND VARIABLE NAME IS SAME, KEY CAN BE SKIPPED
+    // const postData ={
+    //   name: name,
+    //   age: age
+    // }
+    
 
     const url = "http://10.0.2.2:3000/users";
     var result = await fetch(url, {
@@ -33,40 +48,38 @@ const App = () => {
     });
     result = await result.json();
     
-    getApi();
+    if(result) {
+      setAge("");
+      setName("");
+    }
     
   }
 
-  useEffect(()=>{
-    getApi();
-  }, [])
 
   const [data, setData] = useState([]);
+  
+  const [name, setName] = useState("");
+  const [age, setAge] = useState("");
 
   return (
     <View style={style.main}>
-      <StatusBar 
-        backgroundColor="teal" 
-        barStyle="dark-content"
-      />
       <Header />
+      
+      <TextInput 
+        style={style.textInput} 
+        placeholder='Enter Name'
+        onChangeText={(text)=>setName(text)}
+        value={name}
+      />
 
-      {
-        data && data.length 
-        ? 
-          <FlatList 
-            data={data}
-            renderItem={({item})=>
-              <View>
-                <Text style={{ padding: 10, paddingBottom: 0, fontSize: 20 }}>{item.name} ({item.age})</Text>
-              </View>
-            }
-          />
-        :
-        null
-      }
+      <TextInput 
+        style={ style.textInput } 
+        placeholder='Enter Age'
+        onChangeText={(text)=>setAge(text)}
+        value={age}
+      />
 
-      <Button title='Store Data' onPress={()=>storeApi()} />
+      <Button title='Store Data' onPress={storeApi} />
     </View>
 )}
 
@@ -92,12 +105,21 @@ const style = StyleSheet.create({
     padding: 10,
     margin: 7,
     borderRadius: 10
-},
+  },
   text: {
     fontSize: 20,
     margin: 5,
     padding: 5
   },
+  textInput: {
+    borderWidth: 2, 
+    borderRadius: 10, 
+    margin: 10, 
+    padding: 10, 
+    fontSize: 20, 
+    borderColor: "grey"
+  },
+
   label: {
     fontWeight: "bold"
   },
