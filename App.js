@@ -1,28 +1,30 @@
 import React, { useEffect, useState } from 'react';
-import {View, Text, StyleSheet, StatusBar, Button} from 'react-native';
+import {View, Text, StyleSheet, StatusBar, Button, ScrollView} from 'react-native';
 
 
 const Header=()=>{
   return(
     <Text style={style.header}>
-      Call API
+      Call API: List of Data
     </Text>
     );
 }
 const App = () => {
 
   const getApi= async()=>{
-    const url = "https://jsonplaceholder.typicode.com/posts/15";
+    const url = "https://jsonplaceholder.typicode.com/posts";
     var result = await fetch(url);
     result = await result.json();
     setData(result);
+    console.warn(result.length);
   }
 
   useEffect(()=>{
     getApi();
   }, [])
 
-  const [data, setData] = useState(null);
+  const [data, setData] = useState(undefined);
+
   return (
     <View style={style.main}>
       <StatusBar 
@@ -30,18 +32,22 @@ const App = () => {
         barStyle="dark-content"
       />
       <Header />
-
-      {
-        data 
-        ? 
-        <View>
-          <Text style={{ padding: 5, margin: 5, fontSize: 20, fontWeight: "bold" }}>{data.title}</Text>
-          <Text style={{ padding: 5, margin: 5, fontSize: 20 }}>{data.body}</Text>
-        </View>
-        :
-        null
-      }
       
+      {/* SCROLLVIEW IS IMPORTANT TO USE TO SCROLL THE PAGE */}
+      <ScrollView> 
+        {
+          data && data.length 
+          ? 
+            data.map((item)=>
+                <View style={{ borderBottomColor: "grey", borderBottomWidth: 2 }}>
+                  <Text style={{ padding: 5, paddingBottom: 0, fontSize: 20, fontWeight: "bold" }}>{item.title}</Text>
+                  <Text style={{ padding: 20, paddingTop: 0, fontSize: 20 }}>{item.body}</Text>
+                </View>
+            )
+          :
+          null
+        }
+      </ScrollView>
 
 
     </View>
