@@ -5,7 +5,7 @@ import {View, Text, StyleSheet, StatusBar, Button, ScrollView, FlatList} from 'r
 const Header=()=>{
   return(
     <Text style={style.header}>
-      Call API: List of Data
+      POST API: Store Data
     </Text>
     );
 }
@@ -16,6 +16,25 @@ const App = () => {
     var result = await fetch(url);
     result = await result.json();
     setData(result);
+  }
+
+  const storeApi = async()=>{
+    const postData ={
+      name: "Rafid",
+      age: 23
+    }
+
+    const url = "http://10.0.2.2:3000/users";
+    var result = await fetch(url, {
+      method: "POST",
+      headers: { "Content-Type" : "application/json" },
+      body: JSON.stringify(postData)
+
+    });
+    result = await result.json();
+    
+    getApi();
+    
   }
 
   useEffect(()=>{
@@ -46,6 +65,8 @@ const App = () => {
         :
         null
       }
+
+      <Button title='Store Data' onPress={()=>storeApi()} />
     </View>
 )}
 
