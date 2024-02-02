@@ -1,5 +1,7 @@
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import React, { useEffect, useState } from 'react';
 import {View, Text, StyleSheet, StatusBar, Button, ScrollView, FlatList, TextInput, TouchableHighlight} from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
 
 
 const Header=()=>{
@@ -17,18 +19,73 @@ const Header=()=>{
 }
 
 
+const Tab = createMaterialTopTabNavigator();
+
+
 const App = () => {
+  const [data, setData] = useState([]);
+  const [name, setName] = useState("");
+  const [age, setAge] = useState("");
+  const [alert, setAlert] = useState("");
+  const [alertMessage, setAlertMessage] = useState("");
 
-  // const getApi= async()=>{
-  //   const url = "http://10.0.2.2:3000/users";
-  //   var result = await fetch(url);
-  //   result = await result.json();
-  //   setData(result);
-  // }
+  useEffect(()=>{
+    getApi();
+  }, [])
 
-  // useEffect(()=>{
-  //   getApi();
-  // }, [])
+  const StoreData = () => {
+    return (
+      <View>
+        <TextInput 
+          style={style.textInput} 
+          placeholder='Enter Name'
+          onChangeText={(text)=>setName(text)}
+          value={name}
+        />
+      
+        <TextInput 
+          style={ style.textInput } 
+          placeholder='Enter Age'
+          onChangeText={(text)=>setAge(text)}
+          value={age}
+        />
+      
+        <Button title='Store Data' onPress={storeApi} />
+      </View>
+    )
+  }
+
+  const ShowData = () => {
+    return (
+      data && data.length ? (
+        <FlatList 
+          data={data}
+          renderItem={({ item }) => (
+            <View style={{ borderBottomColor: 'grey', borderBottomWidth: 2, flex: 1, flexDirection: "row" }}>
+              <Text style={{ padding: 10, fontSize: 20, flex: 4 }}>{item.name} ({item.age})</Text>
+              <View style={{ padding: 10, fontSize: 20, flex: 1 }}>
+                <Button title='Edit' onPress={()=>editItem(item.id)}/>
+              </View>
+              <View style={{ padding: 10, fontSize: 20, flex: 1 }}>
+                <Button title='Del' onPress={()=>deleteItem(item.id)}/>
+              </View>
+            </View>
+          )}
+        />
+      ) : null
+    );
+  };
+
+  const closeAlert=()=>{
+    setAlert("");
+  }
+
+  const getApi= async()=>{
+    const url = "http://10.0.2.2:3000/users";
+    var result = await fetch(url);
+    result = await result.json();
+    setData(result);
+  }
 
   const storeApi = async()=>{
     if(!name) {
@@ -62,22 +119,51 @@ const App = () => {
     
   }
 
-
-  const [data, setData] = useState([]);
-  
-  const [name, setName] = useState("");
-  const [age, setAge] = useState("");
-  const [alert, setAlert] = useState("");
-  const [alertMessage, setAlertMessage] = useState("");
-
+  const deleteItem = async(props) => {
     
-  const closeAlert=()=>{
-    setAlert("");
+
+    const url = "http://10.0.2.2:3000/users/"+props;
+    var result = await fetch(url, {
+      method: "Delete",
+      headers: { "Content-Type" : "application/json" }
+    });
+    result = await result.json();
+    
+    if(result) {
+      setAlert("success");
+      setAlertMessage("Data Deleted Successfully!");
+    }
+    
+    return (
+      <View>
+        <TextInput 
+          style={style.textInput} 
+          placeholder='Enter Name'
+          onChangeText={(text)=>setName(text)}
+          value={name}
+        />
+      
+        <TextInput 
+          style={ style.textInput } 
+          placeholder='Enter Age'
+          onChangeText={(text)=>setAge(text)}
+          value={age}
+        />
+      
+        <Button title='Store Data' onPress={storeApi} />
+      </View>
+    )
   }
 
   return (
     <View style={style.main}>
-      <Header />
+      <Header />     
+      <NavigationContainer>
+        <Tab.Navigator>
+          <Tab.Screen name='Show Data' component={ShowData} />
+          <Tab.Screen name='Store Data' component={StoreData} />
+        </Tab.Navigator>
+      </NavigationContainer>
       
       {
         alert && alert == "danger"
@@ -105,21 +191,6 @@ const App = () => {
           null
       }
       
-      <TextInput 
-        style={style.textInput} 
-        placeholder='Enter Name'
-        onChangeText={(text)=>setName(text)}
-        value={name}
-      />
-
-      <TextInput 
-        style={ style.textInput } 
-        placeholder='Enter Age'
-        onChangeText={(text)=>setAge(text)}
-        value={age}
-      />
-
-      <Button title='Store Data' onPress={storeApi} />
     </View>
 )}
 
