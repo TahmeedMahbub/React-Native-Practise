@@ -1,4 +1,5 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { NavigationContainer } from '@react-navigation/native';
 import React, { useState } from 'react';
 import {View, Text, StyleSheet, StatusBar, Button} from 'react-native';
@@ -12,7 +13,7 @@ const Header=()=>{
     );
 }
 
-const Tab = createBottomTabNavigator();
+const Tab = createMaterialTopTabNavigator();
 
 const Login =()=>{
   return(<View>
