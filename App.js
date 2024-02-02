@@ -1,10 +1,7 @@
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React, { useState } from 'react';
 import {View, Text, StyleSheet, StatusBar, Button} from 'react-native';
-import { Home } from './components/Home';
-import { Login } from './components/Login';
-
 
 
 const Header=()=>{
@@ -15,18 +12,21 @@ const Header=()=>{
     );
 }
 
-const Stack = createNativeStackNavigator();
+const Tab = createBottomTabNavigator();
 
-const BtnComponent =()=>{
-  return (<Button title="Alada Component" />)
+const Login =()=>{
+  return(<View>
+    <Text>Login</Text>
+  </View>)
+}
+const Registration =()=>{
+  return(<View>
+    <Text>Registration</Text>
+  </View>)
 }
 
 
 const App = () => {
-  const btnAction = () => {
-    console.warn("button pressed");
-  };
-
   return (
     <View style={style.main}>
       <StatusBar 
@@ -34,46 +34,11 @@ const App = () => {
         barStyle="dark-content"
       />
       <NavigationContainer>
-        <Stack.Navigator 
-            screenOptions={
-              { 
-                headerTitle: ()=><Button title="Left" onPress={()=>btnAction()} />,
-                headerRight: ()=><BtnComponent />,
-                title: "User Login", 
-                headerStyle: {
-                  backgroundColor: 'teal'
-                },
-                headerTitleStyle: {
-                  fontSize: 25,
-                  color: 'white'
-                }
-              }
-            }
-          >
-          <Stack.Screen name="Login" 
-            component={Login} 
-            // DO BELOW LINES FOR INDIVIDUAL NAVIGATION BAR, OTHERWISE USE screenOptions IN Stack.Navigator
-            // options={
-            //   { 
-            //     headerTitle: ()=><Button title="Left" onPress={()=>btnAction()} />,
-            //     headerRight: ()=><BtnComponent />,
-            //     title: "User Login", 
-            //     headerStyle: {
-            //       backgroundColor: 'teal'
-            //     },
-            //     headerTitleStyle: {
-            //       fontSize: 25,
-            //       color: 'white'
-            //     }
-            //   }
-            // }
-          />
-          <Stack.Screen name="Home" component={Home} options={{ title: "App Home" }}/>
-        </Stack.Navigator>
+        <Tab.Navigator>
+          <Tab.Screen name='Login' component={Login} />
+          <Tab.Screen name='Registration' component={Registration} />
+        </Tab.Navigator>
       </NavigationContainer>
-
-      {/* <Header /> */}
-
     </View>
 )}
 
