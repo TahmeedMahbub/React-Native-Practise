@@ -3,6 +3,8 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import React, { useState } from 'react';
 import {View, Text, StyleSheet, StatusBar, Button} from 'react-native';
 import { Home } from './components/Home';
+import { Login } from './components/Login';
+
 
 
 const Header=()=>{
@@ -14,15 +16,6 @@ const Header=()=>{
 }
 
 const Stack = createNativeStackNavigator();
-
-const Login = (props) => {
-  return (
-    <View>
-      <Text style={style.textBox}>Login Page</Text>
-      <Button title="Go Home" onPress={()=>props.navigation.navigate("Home")} />
-    </View>
-  )
-}
 
 const BtnComponent =()=>{
   return (<Button title="Alada Component" />)
