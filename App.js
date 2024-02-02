@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import {View, Text, StyleSheet, StatusBar, Button, ScrollView} from 'react-native';
+import {View, Text, StyleSheet, StatusBar, Button, ScrollView, FlatList} from 'react-native';
 
 
 const Header=()=>{
@@ -16,14 +16,13 @@ const App = () => {
     var result = await fetch(url);
     result = await result.json();
     setData(result);
-    console.warn(result.length);
   }
 
   useEffect(()=>{
     getApi();
   }, [])
 
-  const [data, setData] = useState(undefined);
+  const [data, setData] = useState([]);
 
   return (
     <View style={style.main}>
@@ -32,24 +31,22 @@ const App = () => {
         barStyle="dark-content"
       />
       <Header />
-      
-      {/* SCROLLVIEW IS IMPORTANT TO USE TO SCROLL THE PAGE */}
-      <ScrollView> 
-        {
-          data && data.length 
-          ? 
-            data.map((item)=>
-                <View style={{ borderBottomColor: "grey", borderBottomWidth: 2 }}>
-                  <Text style={{ padding: 5, paddingBottom: 0, fontSize: 20, fontWeight: "bold" }}>{item.title}</Text>
-                  <Text style={{ padding: 20, paddingTop: 0, fontSize: 20 }}>{item.body}</Text>
-                </View>
-            )
-          :
-          null
-        }
-      </ScrollView>
 
-
+      {
+        data && data.length 
+        ? 
+          <FlatList 
+            data={data}
+            renderItem={({item})=>
+              <View style={{ borderBottomColor: "grey", borderBottomWidth: 2 }}>
+                <Text style={{ padding: 5, paddingBottom: 0, fontSize: 20, fontWeight: "bold" }}>{item.title}</Text>
+                <Text style={{ padding: 20, paddingTop: 0, fontSize: 20 }}>{item.body}</Text>
+              </View>
+            }
+          />
+        :
+        null
+      }
     </View>
 )}
 
