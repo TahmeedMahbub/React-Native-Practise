@@ -1,45 +1,49 @@
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
-import { NavigationContainer } from '@react-navigation/native';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {View, Text, StyleSheet, StatusBar, Button} from 'react-native';
 
 
 const Header=()=>{
   return(
     <Text style={style.header}>
-      Stack Navigation
+      Call API
     </Text>
     );
 }
-
-const Tab = createMaterialTopTabNavigator();
-
-const Login =()=>{
-  return(<View>
-    <Text>Login</Text>
-  </View>)
-}
-const Registration =()=>{
-  return(<View>
-    <Text>Registration</Text>
-  </View>)
-}
-
-
 const App = () => {
+
+  const getApi= async()=>{
+    const url = "https://jsonplaceholder.typicode.com/posts/15";
+    var result = await fetch(url);
+    result = await result.json();
+    setData(result);
+  }
+
+  useEffect(()=>{
+    getApi();
+  }, [])
+
+  const [data, setData] = useState(null);
   return (
     <View style={style.main}>
       <StatusBar 
         backgroundColor="teal" 
         barStyle="dark-content"
       />
-      <NavigationContainer>
-        <Tab.Navigator>
-          <Tab.Screen name='Login' component={Login} />
-          <Tab.Screen name='Registration' component={Registration} />
-        </Tab.Navigator>
-      </NavigationContainer>
+      <Header />
+
+      {
+        data 
+        ? 
+        <View>
+          <Text style={{ padding: 5, margin: 5, fontSize: 20, fontWeight: "bold" }}>{data.title}</Text>
+          <Text style={{ padding: 5, margin: 5, fontSize: 20 }}>{data.body}</Text>
+        </View>
+        :
+        null
+      }
+      
+
+
     </View>
 )}
 
@@ -60,7 +64,6 @@ const style = StyleSheet.create({
     fontSize: 25,
     backgroundColor: 'silver',
     height: 100,
-    height: 70,
     textAlignVertical: 'center',
     textAlign: 'left',
     padding: 10,
