@@ -12,7 +12,7 @@ const Header=()=>{
 const App = () => {
 
   const getApi= async()=>{
-    const url = "https://jsonplaceholder.typicode.com/posts";
+    const url = "http://10.0.2.2:3000/users";
     var result = await fetch(url);
     result = await result.json();
     setData(result);
@@ -38,9 +38,8 @@ const App = () => {
           <FlatList 
             data={data}
             renderItem={({item})=>
-              <View style={{ borderBottomColor: "grey", borderBottomWidth: 2 }}>
-                <Text style={{ padding: 5, paddingBottom: 0, fontSize: 20, fontWeight: "bold" }}>{item.title}</Text>
-                <Text style={{ padding: 20, paddingTop: 0, fontSize: 20 }}>{item.body}</Text>
+              <View>
+                <Text style={{ padding: 10, paddingBottom: 0, fontSize: 20 }}>{item.name} ({item.age})</Text>
               </View>
             }
           />
