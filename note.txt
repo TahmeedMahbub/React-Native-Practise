@@ -47,3 +47,8 @@ Navigation: 3 types (reactnavigation.org)
 >> npm install react-native-screens react-native-safe-area-context
 >> npm install @react-navigation/native
 >> npx react-native run-android
+
+1 . Tab Navigation
+==============================
+>> npm install @react-navigation/bottom-tabs
+>> npx react-native run-android
