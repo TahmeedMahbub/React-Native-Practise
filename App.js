@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import {View, Text, StyleSheet, StatusBar, Button, ScrollView, FlatList, TextInput} from 'react-native';
+import {View, Text, StyleSheet, StatusBar, Button, ScrollView, FlatList, TextInput, TouchableHighlight} from 'react-native';
 
 
 const Header=()=>{
@@ -7,7 +7,7 @@ const Header=()=>{
     <View>
       <StatusBar 
         backgroundColor="teal" 
-        barStyle="dark-content"
+        barStyle="light-content"
       />
       <Text style={style.header}>
         POST API: Store Data
@@ -15,6 +15,8 @@ const Header=()=>{
     </View>
     );
 }
+
+
 const App = () => {
 
   // const getApi= async()=>{
@@ -23,21 +25,24 @@ const App = () => {
   //   result = await result.json();
   //   setData(result);
   // }
-  
+
   // useEffect(()=>{
   //   getApi();
   // }, [])
 
   const storeApi = async()=>{
+    if(!name) {
+      setAlert("danger");
+      setAlertMessage("Name Is Required!");
+      return false;
+    }
+    if(!age) {
+      setAlert("danger");
+      setAlertMessage("Age Is Required!");
+      return false;
+    }
 
-    const postData ={name, age};
-
-    // IF KEY AND VARIABLE NAME IS SAME, KEY CAN BE SKIPPED
-    // const postData ={
-    //   name: name,
-    //   age: age
-    // }
-    
+    const postData ={name, age}; 
 
     const url = "http://10.0.2.2:3000/users";
     var result = await fetch(url, {
@@ -51,6 +56,8 @@ const App = () => {
     if(result) {
       setAge("");
       setName("");
+      setAlert("success");
+      setAlertMessage("Data Stored Successfully!");
     }
     
   }
@@ -60,10 +67,43 @@ const App = () => {
   
   const [name, setName] = useState("");
   const [age, setAge] = useState("");
+  const [alert, setAlert] = useState("");
+  const [alertMessage, setAlertMessage] = useState("");
+
+    
+  const closeAlert=()=>{
+    setAlert("");
+  }
 
   return (
     <View style={style.main}>
       <Header />
+      
+      {
+        alert && alert == "danger"
+        ? 
+          <View style={style.dangerAlert}>
+            <Text style={style.text}>
+              {alertMessage}
+            </Text>
+            <Button title="X" onPress={()=>closeAlert()} />
+          </View>
+        :
+          null
+      }
+
+      {
+        alert && alert == "success"
+        ? 
+          <View style={style.successAlert}>
+            <Text style={style.text}>
+              {alertMessage}
+            </Text>
+            <Button title="X" onPress={()=>closeAlert()} />
+          </View>
+        :
+          null
+      }
       
       <TextInput 
         style={style.textInput} 
@@ -85,7 +125,8 @@ const App = () => {
 
 const style = StyleSheet.create({
   main: {
-    flex: 1
+    flex: 1,
+    backgroundColor: "#E5E4E2"
   }, 
   header: {
     fontSize:25, 
@@ -117,9 +158,25 @@ const style = StyleSheet.create({
     margin: 10, 
     padding: 10, 
     fontSize: 20, 
-    borderColor: "grey"
+    borderColor: "grey",
+    backgroundColor: "white"
   },
-
+  successAlert: {
+    fontSize: 20,
+    margin: 10,
+    borderColor: "green",
+    borderWidth: 2,
+    borderRadius: 10,
+    backgroundColor: "lightgreen",
+  },
+  dangerAlert: {
+    fontSize: 20,
+    margin: 10,
+    borderColor: "red",
+    borderWidth: 2,
+    borderRadius: 10,
+    backgroundColor: "#FFA07A",
+  },
   label: {
     fontWeight: "bold"
   },
