@@ -14,6 +14,33 @@ const Header=()=>{
       <Text style={style.header}>
         POST API: Store Data
       </Text>
+      
+      
+      {
+        alert && alert == "danger"
+        ? 
+          <View style={style.dangerAlert}>
+            <Text style={style.text}>
+              {alertMessage}
+            </Text>
+            <Button title="X" onPress={()=>closeAlert()} />
+          </View>
+        :
+          null
+      }
+
+      {
+        alert && alert == "success"
+        ? 
+          <View style={style.successAlert}>
+            <Text style={style.text}>
+              {alertMessage}
+            </Text>
+            <Button title="X" onPress={()=>closeAlert()} />
+          </View>
+        :
+          null
+      }
     </View>
     );
 }
@@ -119,13 +146,11 @@ const App = () => {
     
   }
 
-  const deleteItem = async(props) => {
-    
+  const deleteItem = async(id) => {
 
-    const url = "http://10.0.2.2:3000/users/"+props;
+    const url = "http://10.0.2.2:3000/users/"+id;
     var result = await fetch(url, {
-      method: "Delete",
-      headers: { "Content-Type" : "application/json" }
+      method: "Delete"
     });
     result = await result.json();
     
@@ -133,63 +158,14 @@ const App = () => {
       setAlert("success");
       setAlertMessage("Data Deleted Successfully!");
     }
-    
-    return (
-      <View>
-        <TextInput 
-          style={style.textInput} 
-          placeholder='Enter Name'
-          onChangeText={(text)=>setName(text)}
-          value={name}
-        />
-      
-        <TextInput 
-          style={ style.textInput } 
-          placeholder='Enter Age'
-          onChangeText={(text)=>setAge(text)}
-          value={age}
-        />
-      
-        <Button title='Store Data' onPress={storeApi} />
-      </View>
-    )
+    getApi();
   }
 
   return (
     <View style={style.main}>
-      <Header />     
-      <NavigationContainer>
-        <Tab.Navigator>
-          <Tab.Screen name='Show Data' component={ShowData} />
-          <Tab.Screen name='Store Data' component={StoreData} />
-        </Tab.Navigator>
-      </NavigationContainer>
-      
-      {
-        alert && alert == "danger"
-        ? 
-          <View style={style.dangerAlert}>
-            <Text style={style.text}>
-              {alertMessage}
-            </Text>
-            <Button title="X" onPress={()=>closeAlert()} />
-          </View>
-        :
-          null
-      }
+      <Header />
 
-      {
-        alert && alert == "success"
-        ? 
-          <View style={style.successAlert}>
-            <Text style={style.text}>
-              {alertMessage}
-            </Text>
-            <Button title="X" onPress={()=>closeAlert()} />
-          </View>
-        :
-          null
-      }
+      <ShowData />
       
     </View>
 )}
