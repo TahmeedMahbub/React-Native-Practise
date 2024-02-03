@@ -1,53 +1,7 @@
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import React, { useEffect, useState } from 'react';
-import {View, Text, StyleSheet, StatusBar, Button, ScrollView, FlatList, TextInput, TouchableHighlight} from 'react-native';
+import {View, Text, StyleSheet, StatusBar, Button, ScrollView, FlatList, TextInput, Modal} from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
-
-
-const Header=()=>{
-  return(
-    <View>
-      <StatusBar 
-        backgroundColor="teal" 
-        barStyle="light-content"
-      />
-      <Text style={style.header}>
-        POST API: Store Data
-      </Text>
-      
-      
-      {
-        alert && alert == "danger"
-        ? 
-          <View style={style.dangerAlert}>
-            <Text style={style.text}>
-              {alertMessage}
-            </Text>
-            <Button title="X" onPress={()=>closeAlert()} />
-          </View>
-        :
-          null
-      }
-
-      {
-        alert && alert == "success"
-        ? 
-          <View style={style.successAlert}>
-            <Text style={style.text}>
-              {alertMessage}
-            </Text>
-            <Button title="X" onPress={()=>closeAlert()} />
-          </View>
-        :
-          null
-      }
-    </View>
-    );
-}
-
-
-const Tab = createMaterialTopTabNavigator();
-
 
 const App = () => {
   const [data, setData] = useState([]);
@@ -55,6 +9,8 @@ const App = () => {
   const [age, setAge] = useState("");
   const [alert, setAlert] = useState("");
   const [alertMessage, setAlertMessage] = useState("");
+  const [showModal,setShowModal] = useState(false);
+  const [selectedUser,setSelectedUser] = useState(undefined);
 
   useEffect(()=>{
     getApi();
@@ -82,6 +38,48 @@ const App = () => {
     )
   }
 
+  
+  const Header=()=>{
+    return(
+      <View>
+        <StatusBar 
+          backgroundColor="teal" 
+          barStyle="light-content"
+        />
+        <Text style={style.header}>
+          PUT API: Update Data
+        </Text>
+        
+        
+        {
+          alert && alert == "danger"
+          ? 
+            <View style={style.dangerAlert}>
+              <Text style={style.text}>
+                {alertMessage}
+              </Text>
+              <Button title="X" onPress={()=>closeAlert()} />
+            </View>
+          :
+            null
+        }
+
+        {
+          alert && alert == "success"
+          ? 
+            <View style={style.successAlert}>
+              <Text style={style.text}>
+                {alertMessage}
+              </Text>
+              <Button title="X" onPress={()=>closeAlert()} />
+            </View>
+          :
+            null
+        }
+      </View>
+      );
+  }
+
   const ShowData = () => {
     return (
       data && data.length ? (
@@ -91,7 +89,7 @@ const App = () => {
             <View style={{ borderBottomColor: 'grey', borderBottomWidth: 2, flex: 1, flexDirection: "row" }}>
               <Text style={{ padding: 10, fontSize: 20, flex: 4 }}>{item.name} ({item.age})</Text>
               <View style={{ padding: 10, fontSize: 20, flex: 1 }}>
-                <Button title='Edit' onPress={()=>editItem(item.id)}/>
+                <Button title='Edit' onPress={()=>openModal(item)}/>
               </View>
               <View style={{ padding: 10, fontSize: 20, flex: 1 }}>
                 <Button title='Del' onPress={()=>deleteItem(item.id)}/>
@@ -102,6 +100,63 @@ const App = () => {
       ) : null
     );
   };
+
+  const UserModal = (props) => {
+    const [name, setName] = useState("");
+    const [age, setAge] = useState("");
+
+    const updateUser = async() => {
+  
+      const putData ={name, age}; 
+  
+      const url = "http://10.0.2.2:3000/users/"+props.selectedUser.id;
+      var result = await fetch(url, {
+        method: "PUT",
+        headers: { "Content-Type" : "application/json" },
+        body: JSON.stringify(putData)
+  
+      });
+      result = await result.json();
+      
+      if(result) {
+        setAlert("success");
+        setAlertMessage("Data Updated Successfully!");
+        getApi();
+        setShowModal(false);
+      }
+    }
+    
+    useEffect(()=>{
+      if(props.selectedUser) {
+        setName(props.selectedUser.name);
+        setAge(props.selectedUser.age.toString());
+      }
+    }, [props.selectedUser])
+
+    return (
+      <View style={style.modalWrapper}>
+        <View style={style.modalView}>
+          <Text style={{ fontSize: 20, fontWeight: "bold", textAlign: "center" }}>Edit User</Text>
+
+          <TextInput 
+            style={[style.textInput, {width: 250, marginLeft: 0, marginRight: 0}]} 
+            value={name} 
+            onChangeText={(text)=>setName(text)}
+          />
+
+          <TextInput 
+            style={[style.textInput, {width: 250, marginLeft: 0, marginRight: 0}]} 
+            value={age} 
+            onChangeText={(text)=>setAge(text)}
+          />
+
+          <View style={{ marginBottom: 10 }}>
+            <Button title='update' onPress={updateUser}/>
+          </View>
+          <Button title='close' onPress={()=>props.setShowModal(false)}/>
+        </View>
+      </View>);
+  }
 
   const closeAlert=()=>{
     setAlert("");
@@ -161,11 +216,20 @@ const App = () => {
     getApi();
   }
 
+  const openModal = async(data) => {
+    setShowModal(true);
+    setSelectedUser(data);
+  }
+
   return (
     <View style={style.main}>
       <Header />
 
       <ShowData />
+
+      <Modal visible={showModal} transparent={true}>
+        <UserModal setShowModal={setShowModal} selectedUser={selectedUser}/>
+      </Modal>
       
     </View>
 )}
@@ -173,7 +237,6 @@ const App = () => {
 const style = StyleSheet.create({
   main: {
     flex: 1,
-    backgroundColor: "#E5E4E2"
   }, 
   header: {
     fontSize:25, 
@@ -272,7 +335,7 @@ const style = StyleSheet.create({
     alignItems: 'center',
   },
   modalView: {
-    backgroundColor: 'lavender',
+    backgroundColor: '#fff',
     marginBottom: 10,
     padding: 40,
     borderRadius: 20,
