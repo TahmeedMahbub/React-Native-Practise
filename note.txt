@@ -65,3 +65,12 @@ upload and set padding on https://easyappicon.com/
 unzip it and copy all values inside android
 paste on android/app/src/main/res, replace it
 >> npx react-native run-android
+
+
+Async Storage
+================
+store data permanently
+used as local database
+https://reactnative.dev/docs/asyncstorage
+https://github.com/react-native-async-storage/async-storage
+https://react-native-async-storage.github.io/async-storage/docs/install
