@@ -58,3 +58,10 @@ Navigation: 3 types (reactnavigation.org)
 ==============================
 >> npm install @react-navigation/material-top-tabs react-native-tab-view
 >> npm install react-native-pager-view
+
+Change App Icon
+========================
+upload and set padding on https://easyappicon.com/
+unzip it and copy all values inside android
+paste on android/app/src/main/res, replace it
+>> npx react-native run-android
