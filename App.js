@@ -1,5 +1,5 @@
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import {View, Text, StyleSheet, StatusBar, Button, ScrollView, FlatList, TextInput, Modal} from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 
@@ -12,9 +12,9 @@ const App = () => {
   const [showModal,setShowModal] = useState(false);
   const [selectedUser,setSelectedUser] = useState(undefined);
 
-  useEffect(()=>{
-    getApi();
-  }, [])
+  // useEffect(()=>{
+  //   getApi();
+  // }, [])
 
   const StoreData = () => {
     return (
@@ -47,7 +47,7 @@ const App = () => {
           barStyle="light-content"
         />
         <Text style={style.header}>
-          PUT API: Update Data
+          Ref: Access DOM & Components
         </Text>
         
         
@@ -221,15 +221,23 @@ const App = () => {
     setSelectedUser(data);
   }
 
+  const nameInput = useRef();
+  const ageInput = useRef();
+
+  const submitRef = () =>{
+    ageInput.current.focus();
+    nameInput.current.setNativeProps({ editable: false });
+    
+  }
+
   return (
     <View style={style.main}>
       <Header />
 
-      <ShowData />
+      <TextInput placeholder='Enter Name' ref={nameInput} style={style.textInput} />
+      <TextInput placeholder='Enter Age' ref={ageInput} style={style.textInput} />
 
-      <Modal visible={showModal} transparent={true}>
-        <UserModal setShowModal={setShowModal} selectedUser={selectedUser}/>
-      </Modal>
+      <Button title="Submit" onPress={submitRef} />
       
     </View>
 )}
