@@ -2,6 +2,7 @@ import { createMaterialTopTabNavigator } from '@react-navigation/material-top-ta
 import React, { useEffect, useRef, useState } from 'react';
 import {View, Text, StyleSheet, StatusBar, Button, ScrollView, FlatList, TextInput, Modal} from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const App = () => {
   const [data, setData] = useState([]);
@@ -47,7 +48,7 @@ const App = () => {
           barStyle="light-content"
         />
         <Text style={style.header}>
-          Ref: Access DOM & Components
+          Async Storage: Parmanent Data 
         </Text>
         
         
@@ -230,14 +231,26 @@ const App = () => {
     
   }
 
+  const setAsyncData=async()=>{
+    await AsyncStorage.setItem("name", "Rafid");
+  }
+
+  const getAsyncData=async()=>{
+    const name = await AsyncStorage.getItem("name");
+    console.warn(name);
+  }
+
+  const removeAsyncData=async()=>{
+    const name = await AsyncStorage.removeItem("name");
+  }
+
   return (
     <View style={style.main}>
       <Header />
 
-      <TextInput placeholder='Enter Name' ref={nameInput} style={style.textInput} />
-      <TextInput placeholder='Enter Age' ref={ageInput} style={style.textInput} />
-
-      <Button title="Submit" onPress={submitRef} />
+      <View style={{margin: 10}} ><Button title="Get Async Data" onPress={getAsyncData} /></View>
+      <View style={{margin: 10}} ><Button title="Set Async Data" onPress={setAsyncData} /></View>
+      <View style={{margin: 10}} ><Button title="Remove Async Data" onPress={removeAsyncData} /></View>
       
     </View>
 )}
