@@ -74,3 +74,26 @@ used as local database
 https://reactnative.dev/docs/asyncstorage
 https://github.com/react-native-async-storage/async-storage
 https://react-native-async-storage.github.io/async-storage/docs/install
+
+
+============================
+Redux
+============================
+State Management Library
+a State(component) container
+it store data from different centralized unit. 
+it can be stored from anywhere easily
+
+Redux Architechture
+===========================
+-> View (Press Or change any input) 
+-> Actions (will decide what to do) 
+-> Reducer (Perfom what is decided by action) 
+-> Storage (save the data and show where it is called)
+
+
+Saga
+=================
+saga will handle data from action to reducer phase
+it is used when async await is used
+reducer cannot wait after it is called
